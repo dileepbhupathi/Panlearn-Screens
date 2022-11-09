@@ -168,11 +168,10 @@ export const EditOrganisationViewComponent = () => {
           onFinish={(cardData) => {
             reSettingLocalStorageData(cardData);
             localStorage.setItem("item",JSON.stringify(cardData));
-            //  event.preventDefault();
-            console.log("values are here ", cardData);
+            window.location.href='/'
           }}
             onFinishFailed={(error) => {
-            console.log({ error });
+              console.log({ error });
           }}
         >
           <div className="add-organisation-form-image-container">

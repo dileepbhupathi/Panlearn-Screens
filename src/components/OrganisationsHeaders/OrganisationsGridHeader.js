@@ -1,3 +1,4 @@
+import React from "react";
 import { Button, Dropdown, Input, Menu, Space, Typography } from "antd";
 import "./OrganisationsHeader.scss";
 import {
@@ -42,7 +43,7 @@ export const OrganisationsGridHeader = () => {
 
   return (
     <div className="Organisations-header-container">
-      <Text> List Of OrganiZations</Text>
+      <Text> List Of Organizations</Text>
       <div className="organisation-header-searchbar-container">
         <Input
           placeholder="Search for a organisation"

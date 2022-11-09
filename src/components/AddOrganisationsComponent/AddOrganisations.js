@@ -82,14 +82,7 @@ export const AddOrganisations = () => {
     </Form.Item>
   );
 
-  // const getBase64 = (img, callback) => {
-  //   const reader = new FileReader();
-  //   reader.addEventListener('load', () => callback(reader.result));
-  //   reader.readAsDataURL(img);
-  // };
-
   const normFile = (e) => {
-    console.log("Upload event:", e);
   
     if (Array.isArray(e)) {
       return e;
@@ -119,7 +112,6 @@ export const AddOrganisations = () => {
       return;
     }
     if (info.file.status === "done") {
-      // Get this url from response in real world.
       getBase64(info.file.originFileObj, (imageUrl) => {
         setState({
           imageUrl,
@@ -150,42 +142,24 @@ export const AddOrganisations = () => {
     reader.readAsDataURL(img);
   };
 
-  function getValuesFromLocalStorage() {
-    let previousData = localStorage.getItem("organization");
-    let parsedData = JSON.parse(previousData);
-    console.log('most wanted data', parsedData)
-
-
-    if (parsedData === null) {
-      return [];
-    } else {
-      return parsedData;
-    }
-  }
-
-  const organizationData = getValuesFromLocalStorage();
-
-
-  let cardsCount = organizationData.length;
 
   const saveDataToLocalStorage = (organization) => {
+
+    let previousData = localStorage.getItem("organization");
+    let parsedData = JSON.parse(previousData);
+
+    const organizationData = parsedData;
+
+  let cardsCount = organizationData.length;
 
     cardsCount = cardsCount + 1;
 
     let cardId = "card" + cardsCount;
 
-    // const previousData = JSON.parse(localStorage.getItem("organization"));
-    // previousData.push(organization);
-
-    localStorage.setItem("organization", JSON.stringify(organizationData));
-
-    console.log("organization Object is", organization);
-
-    console.log("imageUrl is ", imageUrl);
 
     organization.logo = imageUrl;
 
-    const obj1 = {
+    const cardDataObject = {
       myId :cardId,
       uniqueNumber : cardsCount,
       logo: organization.logo,
@@ -200,7 +174,10 @@ export const AddOrganisations = () => {
       admin : organization.admin,
       orgDomain : organization.orgDomain
     };
-    organizationData.push(obj1);
+    organizationData.push(cardDataObject);
+
+    localStorage.setItem("organization", JSON.stringify(organizationData));
+
 
   };
 
@@ -211,7 +188,6 @@ export const AddOrganisations = () => {
 
   const [multiSelectValue, setMultiSelectValue] = useState([]);
   const onChange = (newMultiSelectValue) => {
-    console.log("onChange ", multiSelectValue);
     setMultiSelectValue(newMultiSelectValue);
   };
 
@@ -238,8 +214,7 @@ export const AddOrganisations = () => {
           // getValueFromEvent={normFile}
           onFinish={(values) => {
             saveDataToLocalStorage(values);
-
-            console.log("values are here ", values);
+            window.location.href = '/'
           }}
           onFinishFailed={(error) => {
             console.log({ error });

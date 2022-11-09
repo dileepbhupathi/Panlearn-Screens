@@ -15,7 +15,6 @@ export const OrganisationGridContent = () => {
 
     useEffect (() => {
       const pageNumber = (page - 1)*pageSize
-      console.log(pageNumber)
         const filterArray = parsedUpdatedData.slice(pageNumber,pageNumber+pageSize)
         setFilterData(filterArray)
     },[page])
@@ -29,8 +28,6 @@ export const OrganisationGridContent = () => {
 
         let getIndex = parsedUpdatedData.findIndex(function (eachCard) {
           let eachCardId = "card" + eachCard.uniqueNumber;
-          console.log("eachcardId", eachCardId);
-          console.log("myCardId", parsedUpdatedData[i].myId);
           if (eachCardId === parsedUpdatedData[i].myId) {
             return true;
           } else {
@@ -38,24 +35,22 @@ export const OrganisationGridContent = () => {
           }
         });
 
-      // output.logo=imageUrl;
-      const obj = {
+      const cardDataObject = {
         getIndex : getIndex,
         logo: item.logo,
-      orgName: item.orgName,
-      service: item.service,
-      email: item.email,
-      address: item.address,
-      state: item.state,
-      uniqueId: item.orgName + "1",
-      phoneNumber : item.phoneNumber,
-      city : item.city,
-      admin : item.admin,
-      orgDomain : item.orgDomain
+        orgName: item.orgName,
+        service: item.service,
+        email: item.email,
+        address: item.address,
+        state: item.state,
+        uniqueId: item.orgName + "1",
+        phoneNumber : item.phoneNumber,
+        city : item.city,
+        admin : item.admin,
+        orgDomain : item.orgDomain
       };
-      cardData.push(obj);
+      cardData.push(cardDataObject);
       localStorage.setItem("item", JSON.stringify(cardData));
-      console.log(cardData);
     };
 
   return (
