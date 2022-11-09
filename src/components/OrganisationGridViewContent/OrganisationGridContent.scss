@@ -1,0 +1,79 @@
+// .organisation-grid-content-container{
+//     display: flex;
+//     flex-wrap: wrap;
+//     justify-content: space-evenly;
+//     width: 100%;
+//     // margin: 0% 5%;
+//     box-sizing: border-box;
+//     height: 77.5vh;
+// }
+
+.organisation-grid-content-card-container{
+    width: 90%;
+    border-radius: 0.5em;
+    background-color: #FAFAFA;
+    position: relative;
+    // overflow: visible;
+    height: 18vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    box-sizing: border-box;
+    margin-left: 5%;
+}
+
+// .ant-card  {
+//     margin-bottom: 2%;
+// }
+
+.ant-card-body{
+    padding: 10% 10% 5% 7%;
+}
+
+.ant-card-meta {
+    align-items: center;
+}
+
+// .ant-card {
+//     margin-left: 5%;
+//     // margin-right: 5%;
+//     height: 20vh;
+//     border-radius: 0.5em;
+//     background-color: #FAFAFA;
+// }
+
+.failure-status{
+    width: 3%;
+    height: 2vh;
+    background-color: red;
+    position: absolute;
+    border-radius: 50%;
+    top: 23%;
+    left: 22%;
+}
+
+.success-status{
+    width: 4%;
+    height: 2vh;
+    background-color: green;
+    position: absolute;
+    border-radius: 50%;
+    top: 23%;
+    left: 25%;
+}
+
+.ant-pagination-next .ant-pagination-item-link, .ant-pagination-prev .ant-pagination-item-link {
+    border-radius: 50%;
+}
+
+.ant-pagination-item {
+    border: 1px solid transparent;
+    border-radius: 50%;
+}
+
+.ant-pagination-item-active a {
+    color: white;
+    background-color: #1890ff;
+    border-radius: 50%;
+}
+

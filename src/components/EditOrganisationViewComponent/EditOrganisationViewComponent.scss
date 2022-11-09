@@ -1,0 +1,91 @@
+.reset-button{
+    color: #1890ff;
+    border: 1.5px solid grey;
+    border-radius: 0.25em;
+}
+
+.reset-password-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.reset-password-title{
+    font-weight: 700;
+    font-size: 1.5em;
+    margin-bottom: 5%;
+}
+
+.reset-button-container{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    width: 100%;
+}
+
+.reset-password-input {
+    border: 1px solid #d9d9d9;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    width: 100%;
+}
+
+.ant-form {
+    width: 100%;
+}
+
+.ant-input-suffix {
+    color: grey;
+    margin-right: 0%;
+}
+
+.tick-icon-container{
+    background-color: #40BC21;
+    border-radius: 50%;
+    width: 25%;
+    height: 15vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.password-changed-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10%;
+}
+
+.ant-modal-confirm-body .ant-modal-confirm-title {
+    font-weight: 700;
+    font-size: 30px;
+    text-align: center;
+    line-height: normal;
+    width: 100%;
+    margin-bottom: 5%;
+}
+
+.ant-modal-confirm-body>.anticon+.ant-modal-confirm-title+.ant-modal-confirm-content {
+    margin-left: 0;
+    text-align: center;
+    font-size: 18px;
+    color: grey;
+}
+
+.ant-modal-confirm-success .ant-modal-confirm-body>.anticon {
+    color: #52c41a;
+    width: 100%;
+    font-size: 5em;
+    margin-bottom: 10%;
+}
+
+.ant-modal-confirm .ant-modal-confirm-btns {
+    margin-top: 24px;
+    text-align: right;
+    visibility: hidden;
+}
