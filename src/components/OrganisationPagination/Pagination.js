@@ -20,6 +20,8 @@ export const OrgPagination = (props) => {
     </div>
   );
 };
+
+
 OrgPagination.propTypes = {
   setpage: PropTypes.number,
   pageSize: PropTypes.number

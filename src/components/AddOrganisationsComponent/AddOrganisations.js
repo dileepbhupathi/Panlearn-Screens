@@ -1,11 +1,76 @@
-import { Form, Input, Typography, Upload, message, Select, Button } from "antd";
+import {
+  Form,
+  Input,
+  Typography,
+  Upload,
+  message,
+  Select,
+  Button,
+  TreeSelect,
+} from "antd";
 import "./AddOrganisations.scss";
-import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import React, { useState } from "react";
-import { TreeSelect } from "antd";
+// import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import {
+  states,
+  admins,
+  domains,
+} from "../../Constants/FormSectionsData/FormSectionsData";
+import { v4 as uuid } from "uuid";
+import PropTypes from "prop-types";
 
-export const AddOrganisations = () => {
+export const AddOrganisations = ({ selectedCardData }) => {
+  console.log("selected Card Data", selectedCardData);
+
+  const [defaultValue, setDefaultValue] = useState({
+    logo: "",
+    orgName: "",
+    phoneNumber: "",
+    email: "",
+    city: "",
+    state: "",
+    admin: "",
+    orgDomain: "",
+    address: "",
+  });
+
+  useEffect(() => {
+    // setDefaultValue(selectedCardData)
+    if (location.href === "http://localhost:3000/AddOrganisationsView") {
+      setDefaultValue({
+        logo: "",
+        orgName: "",
+        phoneNumber: "",
+        email: "",
+        city: "",
+        state: "",
+        admin: "",
+        orgDomain: "",
+        address: "",
+      });
+    } else {
+      setDefaultValue(selectedCardData);
+    }
+  }, []);
+
+  const uniqueId = uuid();
+  const id = uniqueId.slice(0, 3);
+
+  const stateOptions = [];
+  for (let i = 0; i < states.length; i++) {
+    stateOptions.push({ value: states[i] });
+  }
+
+  const adminOptions = [];
+  for (let i = 0; i < admins.length; i++) {
+    adminOptions.push({ value: admins[i] });
+  }
+
+  const domainOptions = [];
+  for (let i = 0; i < domains.length; i++) {
+    domainOptions.push({ value: domains[i] });
+  }
 
   const { SHOW_PARENT } = TreeSelect;
   const treeData = [
@@ -55,7 +120,7 @@ export const AddOrganisations = () => {
         style={{
           width: 70,
         }}
-        defaultValue="India"
+        // defaultValue="India"
       >
         <Option value="India">
           <img
@@ -83,7 +148,6 @@ export const AddOrganisations = () => {
   );
 
   const normFile = (e) => {
-  
     if (Array.isArray(e)) {
       return e;
     }
@@ -91,22 +155,21 @@ export const AddOrganisations = () => {
   };
 
   const beforeUpload = (file) => {
-    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
     if (!isJpgOrPng) {
-      message.error('You can only upload JPG/PNG file!');
+      message.error("You can only upload JPG/PNG file!");
     }
     const isLt2M = file.size / 1024 / 1024 < 2;
     if (!isLt2M) {
-      message.error('Image must smaller than 2MB!');
+      message.error("Image must smaller than 2MB!");
     }
     return isJpgOrPng && isLt2M;
   };
-  
+
   const [state, setState] = useState({
     loading: false,
   });
   const handleChange = (info) => {
-    
     if (info.file.status === "uploading") {
       setState({ loading: true });
       return;
@@ -121,64 +184,70 @@ export const AddOrganisations = () => {
     }
   };
 
-  const {imageUrl} = state
+  const { imageUrl } = state;
 
-  const uploadButton = (
-    <div>
-      {imageUrl ? <LoadingOutlined /> : <PlusOutlined />}
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
-        Upload
-      </div>
-    </div>
-  );
+  // const uploadButton = (
+  //   <div>
+  //     {imageUrl ? <LoadingOutlined /> : <PlusOutlined />}
+  //     <div
+  //       style={{
+  //         marginTop: 8,
+  //       }}
+  //     >
+  //       Upload
+  //     </div>
+  //   </div>
+  // );
 
   const getBase64 = (img, callback) => {
     const reader = new FileReader();
-    reader.addEventListener('load', () => callback(reader.result));
+    reader.addEventListener("load", () => callback(reader.result));
     reader.readAsDataURL(img);
   };
 
-
   const saveDataToLocalStorage = (organization) => {
 
-    let previousData = localStorage.getItem("organization");
-    let parsedData = JSON.parse(previousData);
+    if (location.href === "http://localhost:3000/AddOrganisationsView") {
+      organization["id"] = id;
 
-    const organizationData = parsedData;
+      let organizationData;
 
-  let cardsCount = organizationData.length;
+      let previousData = localStorage.getItem("organization");
+      let parsedData = JSON.parse(previousData);
 
-    cardsCount = cardsCount + 1;
+      if (parsedData === null) {
+        organizationData = [];
+      } else {
+        organizationData = parsedData;
+      }
 
-    let cardId = "card" + cardsCount;
+      organization.logo = imageUrl;
 
+      const dataObject = {
+        id: organization.id,
+        logo: organization.logo,
+        orgName: organization.orgName,
+        service: organization.service,
+        email: organization.email,
+        address: organization.address,
+        state: organization.state,
+        phoneNumber: organization.phoneNumber,
+        city: organization.city,
+        admin: organization.admin,
+        orgDomain: organization.orgDomain,
+      };
+      organizationData.push(dataObject);
 
-    organization.logo = imageUrl;
+      localStorage.setItem("organization", JSON.stringify(organizationData));
+    }
+    else {
+      let previousData = localStorage.getItem("organization");
+      let parsedData = JSON.parse(previousData);
+      console.log(parsedData)
 
-    const cardDataObject = {
-      myId :cardId,
-      uniqueNumber : cardsCount,
-      logo: organization.logo,
-      orgName: organization.orgName,
-      service: organization.service,
-      email: organization.email,
-      address: organization.address,
-      state: organization.state,
-      uniqueId: organization.orgName + "1",
-      phoneNumber : organization.phoneNumber,
-      city : organization.city,
-      admin : organization.admin,
-      orgDomain : organization.orgDomain
-    };
-    organizationData.push(cardDataObject);
-
-    localStorage.setItem("organization", JSON.stringify(organizationData));
-
-
+      let index = parsedData.findIndex(selectedCardData)
+      console.log('index', index)
+    }
   };
 
   const layout = {
@@ -211,10 +280,11 @@ export const AddOrganisations = () => {
           autoComplete="on"
           className="add-organisation-form"
           layout="vertical"
+          key={defaultValue.id}
           // getValueFromEvent={normFile}
           onFinish={(values) => {
             saveDataToLocalStorage(values);
-            window.location.href = '/'
+            window.location.href = "/";
           }}
           onFinishFailed={(error) => {
             console.log({ error });
@@ -236,19 +306,23 @@ export const AddOrganisations = () => {
                 onChange={handleChange}
               >
                 {imageUrl ? (
+                  <img src={imageUrl} alt="avatar" className="form-image" />
+                ) : (
                   <img
-                    src={imageUrl}
-                    alt="avatar"
-                    style={{
-                      width: "100%",
-                      borderRadius: "50%",
-                      objectFit: "auto",
-                      height: "100%",
-                    }}
+                    src={defaultValue.logo}
+                    alt="logo"
+                    className="form-image"
+                  />
+                )}
+                {/* {selectedCardData? (
+                  <img
+                  src= {selectedCardData.logo}
+                  alt = 'logo'
+                  className = 'form-image'
                   />
                 ) : (
                   uploadButton
-                )}
+                )} */}
               </Upload>
             </Form.Item>
           </div>
@@ -260,26 +334,26 @@ export const AddOrganisations = () => {
                 {
                   required: true,
                   message: "Please enter organization name",
-                },
-                {
                   min: 3,
                 },
               ]}
               hasFeedback
-              style={{ width: "40%", marginRight: "5%", height: "8vh" }}
+              className="form-item"
             >
               <Input
                 placeholder="Type Organisation Name"
-                style={{ width: "100%" }}
+                className="input"
+                allowClear={true}
+                defaultValue={defaultValue.orgName}
               />
             </Form.Item>
             <Form.Item
-              style={{ width: "40%", height: "8vh" }}
+              className="form-item1"
               label="Service :"
-              name='service'
+              name="service"
               rules={[{ required: true, message: "service is required" }]}
             >
-              <TreeSelect {...tProps} />
+              <TreeSelect {...tProps} defaultValue={defaultValue.service} />
             </Form.Item>
             <Form.Item
               label="Phone Number :"
@@ -290,14 +364,17 @@ export const AddOrganisations = () => {
                   message: "Please input your phone number!",
                 },
               ]}
-              style={{ width: "40%", marginRight: "5%", height: "8vh" }}
+              className="form-item"
             >
               <Input
                 addonBefore={prefixSelector}
-                style={{
-                  width: "100%"
-                }}
                 placeholder="Please enter phone number"
+                className="input"
+                size="medium"
+                // allowClear = {true}
+                minLength={9}
+                maxLength={10}
+                defaultValue={defaultValue.phoneNumber}
               />
             </Form.Item>
             <Form.Item
@@ -313,94 +390,70 @@ export const AddOrganisations = () => {
                   message: "Please input your E-mail!",
                 },
               ]}
-              style={{ width: "40%", height: "8vh" }}
+              className="form-item1"
             >
               <Input
-                style={{ width: "100%" }}
                 placeholder="Please enter email"
+                className="input"
+                allowClear={true}
+                defaultValue={defaultValue.email}
               />
             </Form.Item>
             <Form.Item
               label="City :"
               name="city"
               rules={[{ required: true, message: "Please enter city" }]}
-              style={{ width: "40%", marginRight: "5%", height: "8vh" }}
+              className="form-item"
             >
               <Input
-                style={{ width: "100%" }}
                 placeholder="Please enter city"
+                className="input"
+                allowClear={true}
+                defaultValue={defaultValue.city}
               />
             </Form.Item>
             <Form.Item
               label="State :"
               name="state"
-              style={{ width: "40%", height: "8vh" }}
               rules={[{ required: true, message: "Please enter state" }]}
+              className="form-item1"
             >
-              <Select defaultValue="state" style={{ width: "100%" }}>
-                <Select.Option value="Assam">state</Select.Option>
-                <Select.Option value="Andhra Pradesh">
-                  Andhra Pradesh
-                </Select.Option>
-                <Select.Option value="Arunachal Pradesh">
-                  Arunachal Pradesh
-                </Select.Option>
-                <Select.Option value="Assam">Assam</Select.Option>
-                <Select.Option value="Banglore">Banglore</Select.Option>
-                <Select.Option value="Bihar">Bihar</Select.Option>
-                <Select.Option value="Chennai">Chennai</Select.Option>
-                <Select.Option value="Delhi">Delhi</Select.Option>
-                <Select.Option value="Hyderabad">Hyderabad</Select.Option>
-                <Select.Option value="Karnataka">Karnataka</Select.Option>
-                <Select.Option value="Kolkata">Kolkata</Select.Option>
-                <Select.Option value="Maharasatra">Maharasatra</Select.Option>
-                <Select.Option value="Pune">Pune</Select.Option>
-              </Select>
+              <Select
+                defaultValue={defaultValue.state}
+                className="input"
+                options={stateOptions}
+              ></Select>
             </Form.Item>
-            <Form.Item
-              label="Admin :"
-              name="admin"
-              style={{ width: "40%", marginRight: "5%", height: "8vh" }}
-            >
-              <Select defaultValue="Select Admin" style={{ width: "100%" }}>
-              <Select.Option value="Select Admin">Select Admin</Select.Option>
-                <Select.Option value="Kishore">Kishore</Select.Option>
-                <Select.Option value="Sasi">Sasi</Select.Option>
-                <Select.Option value="Ganesh">Ganesh</Select.Option>
-                <Select.Option value="Shilpa">Shilpa</Select.Option>
-              </Select>
+            <Form.Item label="Admin :" name="admin" className="form-item">
+              <Select
+                defaultValue={defaultValue.admin}
+                className="input"
+                options={adminOptions}
+              ></Select>
             </Form.Item>
             <Form.Item
               label="Domain :"
               name="orgDomain"
-              style={{ width: "40%", height: "8vh" }}
               rules={[{ required: true, message: "Please enter state" }]}
+              className="form-item1"
             >
-              <Select defaultValue="services" style={{ width: "100%" }}>
-                <Select.Option value="services">service</Select.Option>
-                <Select.Option value="IT Services">
-                  IT Services
-                </Select.Option>
-                <Select.Option value="Finance Service">
-                  Finance Service
-                </Select.Option>
-                <Select.Option value="Online Booking">Online Booking</Select.Option>
-                <Select.Option value="Ecommerce">Ecommerce</Select.Option>
-                <Select.Option value="Hospitality">Hospitality</Select.Option>
-                <Select.Option value="Healthcare">Healthcare</Select.Option>
-                <Select.Option value="Construction Service">Construction Service</Select.Option>
-                <Select.Option value="Automobiles">Automobiles</Select.Option>
-              </Select>
+              <Select
+                defaultValue={defaultValue.orgDomain}
+                className="input"
+                options={domainOptions}
+              ></Select>
             </Form.Item>
             <Form.Item
               label="Address :"
               name={["address"]}
               rules={[{ required: true, message: "address is required" }]}
-              style={{ width: "40%", height: "7vh" }}
+              className="form-item1"
             >
               <Input
-                style={{ width: "100%" }}
                 placeholder="Please enter address"
+                className="input"
+                allowClear={true}
+                defaultValue={defaultValue.address}
               />
             </Form.Item>
             <div className="add-organisation-form-buttons">
@@ -425,4 +478,8 @@ export const AddOrganisations = () => {
       </div>
     </div>
   );
+};
+
+AddOrganisations.propTypes = {
+  selectedCardData: PropTypes.object,
 };

@@ -270,7 +270,7 @@ export const EditOrganisationViewComponent = () => {
                 },
               ]}
               hasFeedback
-              style={{ width: "40%", marginRight: "5%", height: "8vh" }}
+              className="form-item"
             >
               <Input
                 placeholder="Type Organisation Name"
@@ -279,7 +279,7 @@ export const EditOrganisationViewComponent = () => {
               />
             </Form.Item>
             <Form.Item
-              style={{ width: "40%", height: "8vh" }}
+            className="form-item1"
               label="Service :"
             >
               <TreeSelect {...tProps}/>
@@ -292,7 +292,7 @@ export const EditOrganisationViewComponent = () => {
                   message: "Please input your phone number!",
                 },
               ]}
-              style={{ width: "40%", marginRight: "5%", height: "8vh" }}
+              className="form-item"
             >
               <Input
                 addonBefore={prefixSelector}
@@ -316,7 +316,7 @@ export const EditOrganisationViewComponent = () => {
                   message: "Please input your E-mail!",
                 },
               ]}
-              style={{ width: "40%", height: "8vh" }}
+              className="form-item1"
             >
               <Input
                 style={{ width: "100%" }}
@@ -327,7 +327,7 @@ export const EditOrganisationViewComponent = () => {
             <Form.Item
               label="City :"
               rules={[{ required: true, message: "Please enter city" }]}
-              style={{ width: "40%", marginRight: "5%", height: "8vh" }}
+              className="form-item"
               name='city'
             >
               <Input
@@ -339,7 +339,7 @@ export const EditOrganisationViewComponent = () => {
             <Form.Item
               label="State :"
               name='state'
-              style={{ width: "40%", height: "8vh" }}
+              className="form-item1"
               rules={[{ required: true, message: "Please enter state" }]}
             >
               <Select defaultValue={parsedUpdatedCardData[0].state} style={{ width: "100%" }}>
@@ -364,7 +364,7 @@ export const EditOrganisationViewComponent = () => {
             <Form.Item
               label="Admin :"
               name='admin'
-              style={{ width: "40%", marginRight: "5%", height: "8vh" }}
+              className="form-item"
             >
               <Select defaultValue={parsedUpdatedCardData[0].admin} style={{ width: "100%" }}>
                 <Select.Option value="Kishore">Kishore</Select.Option>
@@ -375,7 +375,7 @@ export const EditOrganisationViewComponent = () => {
             </Form.Item>
             <Form.Item
               label="Domain :"
-              style={{ width: "40%", height: "8vh" }}
+              className="form-item1"
               name='orgDomain'
               rules={[{ required: true, message: "Please enter state" }]}
             >
@@ -399,7 +399,7 @@ export const EditOrganisationViewComponent = () => {
               label="Address :"
               name='address'
               rules={[{ required: true, message: "address is required" }]}
-              style={{ width: "40%", height: "7vh" }}
+              className="form-item1"
             >
               <Input
                 style={{ width: "100%" }}

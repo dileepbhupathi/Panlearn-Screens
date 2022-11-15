@@ -13,7 +13,8 @@
     box-sizing: border-box;
     display: flex;
     justify-content: space-between;
-    width: 65%;
+    width: 60%;
+    height: 6vh;
 }
 
 .ant-input-affix-wrapper {
@@ -27,21 +28,33 @@
     margin-right: 10%;
 }
 
-.organisation-header-icons-container{
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+// .organisation-header-icons-container{
+//     box-sizing: border-box;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+    
+// }
 
 .organisation-app-filled-icon{
-    color: blue;
-    font-size: 1.5em;
-    margin: 0% 25%;
+    color: #0076BF;
+    // font-size: 1.5em;
+    // margin: 0% 25%;
 }
 
 .organisation-list-icon{
     color: grey;
-    font-size: 1.5em;
-    margin: 0% 25%;
+    // font-size: 1.5em;
+    // margin: 0% 25%;
 }
+
+
+.ant-menu-horizontal, .ant-menu-item::after {
+    border: none !important;
+    // color: #eeeeee;
+}
+
+// .ant-menu>.ant-menu-item-selected {
+//     color: #0076BF;
+// }
+

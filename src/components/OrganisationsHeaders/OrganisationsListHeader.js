@@ -48,12 +48,16 @@ export const OrganisationsListHeader = () => {
           placeholder="Search for a organisation"
           prefix={<SearchOutlined />}
         />
-        <div className="organisation-header-icons-container">
-          <Link to='/'>
+        <Menu mode="horizontal" className="organisation-header-icons-container">
+        <Link to='/'>
+          <Menu.Item key="gridContent">
           <AppstoreFilled className="organisation-list-icon" />
+          </Menu.Item>
           </Link>
+          <Menu.Item key="listContent">
           <UnorderedListOutlined className="organisation-app-filled-icon" />
-        </div>
+          </Menu.Item>
+        </Menu>
         <div>
           <Dropdown overlay={menu}>
             <Button>

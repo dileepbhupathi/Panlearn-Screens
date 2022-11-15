@@ -1,11 +1,19 @@
 import React from 'react'
-import { EditOrganisationViewComponent } from '../../components/EditOrganisationViewComponent/EditOrganisationView'
+import { AddOrganisations } from '../../components/AddOrganisationsComponent/AddOrganisations'
+// import { EditOrganisationViewComponent } from '../../components/EditOrganisationViewComponent/EditOrganisationView'
 import './EditOrganisationViewScreen.scss'
+import PropTypes from 'prop-types';
 
-export const EditOrganisationView = () => {
+
+export const EditOrganisationView = ({selectedCardData}) => {
   return (
     <>
-      <EditOrganisationViewComponent/>
+      <AddOrganisations selectedCardData = {selectedCardData}/>
     </>
   )
+}
+
+
+EditOrganisationView.propTypes = {
+  selectedCardData: PropTypes.object,
 }
