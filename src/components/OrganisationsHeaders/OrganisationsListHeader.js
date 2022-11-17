@@ -8,12 +8,9 @@ import {
   DownOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Link, useRouteMatch } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const OrganisationsListHeader = () => {
-
-  const {url} = useRouteMatch()
-  
   const { Text } = Typography;
 
   const handleMenuClick = (e) => {
@@ -71,7 +68,7 @@ export const OrganisationsListHeader = () => {
             </Button>
           </Dropdown>
         </div>
-        <Link to={`${url}/AddOrganisationsView`}>
+        <Link to='/AddOrganisationsView'>
         <Button type="primary">Add Organization</Button>
         </Link>
       </div>

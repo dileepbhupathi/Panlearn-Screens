@@ -4,17 +4,17 @@ import { Content, Header } from "antd/lib/layout/layout";
 import Sider from "antd/lib/layout/Sider";
 import { OrganisationGridView } from "./view/OrganisationsGridViewScreen/OrganisationGridView";
 import "./App.scss";
-import { Route, BrowserRouter as Router, Switch, useRouteMatch } from "react-router-dom";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { OrganisationsListViewScreen } from "./view/OrganisationsListViewScreen/OrganisationsListViewScreen";
 // import {OrganisationsGridHeader} from './components/OrganisationsHeaders/OrganisationsGridHeader'
 // import {OrganisationsListHeader} from './components/OrganisationsHeaders/OrganisationsListHeader'
 import {AddOrganisationsView} from './view/AddOrganisationsViewScreen/AddOrganisationsview'
-import {EditOrganisationView} from './view/EditOrganisationViewScreen/EditOrganisationViewScreen'
+// import {EditOrganisationView} from './view/EditOrganisationViewScreen/EditOrganisationViewScreen'
 
 
 function App() {
 
-  let {path} = useRouteMatch();
+  // let {path} = useRouteMatch();
 
   const [selectedCardData, setSelectedCardData] = useState();
 
@@ -35,14 +35,14 @@ function App() {
                 <Route exact path="/Organisations" >
                   <OrganisationGridView selectedCard={selectedCard}/>
                 </Route>
-                <Route exact path="/OrganisationList" >
+                <Route exact path="/OrganisationList"  >
                   <OrganisationsListViewScreen selectedCard={selectedCard}/>
                 </Route>
-                <Route exact path={path} >
+                <Route exact path='/AddOrganisationsView' >
                   <AddOrganisationsView/>
                 </Route>
-                <Route  path={path}>
-                  <EditOrganisationView  selectedCardData = {selectedCardData}/>
+                <Route exact path='/EditOrganisation'>
+                  <AddOrganisationsView  selectedCardData = {selectedCardData}/>
                 </Route>
               </Switch>
             </Router>

@@ -1,17 +1,17 @@
 import React from "react";
 import { AddOrganisations } from "../../components/AddOrganisationsComponent/AddOrganisations";
-// import PropTypes from 'prop-types';
-import { Typography } from "antd";
+import PropTypes from 'prop-types';
 
-export const AddOrganisationsView = () => {
-  const { Text } = Typography;
+export const AddOrganisationsView = ({selectedCardData}) => {
 
   return (
     <>
-      <div className="Add-organisations-container">
-        <Text>Add Organization</Text>
-        <AddOrganisations />
-      </div>
+      
+        <AddOrganisations selectedCardData = {selectedCardData}/>
     </>
   );
+};
+
+AddOrganisationsView.propTypes = {
+  selectedCardData: PropTypes.object,
 };

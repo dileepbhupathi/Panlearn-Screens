@@ -1,15 +1,13 @@
 import { Avatar, Card, List } from "antd";
 import Meta from "antd/lib/card/Meta";
 import React, { useEffect, useState } from "react";
-import { Link, useRouteMatch } from "react-router-dom";
+import { Link } from "react-router-dom";
 // import { OrganisationsDummyData } from "../../Constants/OrganisationsDummyData/OrganisationsDummyData";
 import { OrgPagination } from "../OrganisationPagination/Pagination";
 import "./OrganisationGridContent.scss";
 import PropTypes from 'prop-types';
 
 export const OrganisationGridContent = ({selectedCard}) => {
-
-  const {url} = useRouteMatch
 
     const [page, setpage]= useState(1)
     const [filterData, setFilterData]= useState()
@@ -34,7 +32,7 @@ export const OrganisationGridContent = ({selectedCard}) => {
             dataSource={filterData}
             renderItem={(item) => (
             <List.Item onClick={()=>selectedCard(item)}>
-                <Link to={`${url}/EditOrganisation?id=${item.id}`}>
+                <Link to='/EditOrganisation'>
                 <Card className="organisation-grid-content-card-container" >
                     {item.orgStatus===true ?<div className="success-status"></div>:<div className="failure-status"></div>}
                     
