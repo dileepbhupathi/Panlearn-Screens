@@ -9,9 +9,12 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 
-import { Link } from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
 
 export const OrganisationsGridHeader = () => {
+
+  const {url} = useRouteMatch()
+
   const { Text } = Typography;
 
   const handleMenuClick = (e) => {
@@ -63,7 +66,7 @@ export const OrganisationsGridHeader = () => {
           <Menu.Item key="gridContent">
             <AppstoreFilled  className="organisation-app-filled-icon"/>
           </Menu.Item>
-          <Link to='/OrganisationListView'>
+          <Link to='/OrganisationList'>
             <Menu.Item key="listContent">
               <UnorderedListOutlined  className="organisation-list-icon" />
             </Menu.Item>
@@ -79,7 +82,7 @@ export const OrganisationsGridHeader = () => {
             </Button>
           </Dropdown>
         </div>
-        <Link to="/AddOrganisationsView">
+        <Link to={`${url}/AddOrganisationsView`}>
           <Button type="primary">Add Organization</Button>
         </Link>
       </div>

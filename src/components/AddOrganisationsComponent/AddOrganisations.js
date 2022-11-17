@@ -1,17 +1,18 @@
 import {
   Form,
   Input,
-  Typography,
   Upload,
   message,
   Select,
   Button,
   TreeSelect,
+  Modal,
+  Typography
 } from "antd";
 import "./AddOrganisations.scss";
 // import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import {
   states,
   admins,
@@ -19,9 +20,15 @@ import {
 } from "../../Constants/FormSectionsData/FormSectionsData";
 import { v4 as uuid } from "uuid";
 import PropTypes from "prop-types";
+import { useHistory } from 'react-router-dom'
+
 
 export const AddOrganisations = ({ selectedCardData }) => {
-  console.log("selected Card Data", selectedCardData);
+
+  const history = useHistory()
+
+
+  const {Text} = Typography
 
   const [defaultValue, setDefaultValue] = useState({
     logo: "",
@@ -36,7 +43,6 @@ export const AddOrganisations = ({ selectedCardData }) => {
   });
 
   useEffect(() => {
-    // setDefaultValue(selectedCardData)
     if (location.href === "http://localhost:3000/AddOrganisationsView") {
       setDefaultValue({
         logo: "",
@@ -52,7 +58,7 @@ export const AddOrganisations = ({ selectedCardData }) => {
     } else {
       setDefaultValue(selectedCardData);
     }
-  }, []);
+  }, []); 
 
   const uniqueId = uuid();
   const id = uniqueId.slice(0, 3);
@@ -71,6 +77,7 @@ export const AddOrganisations = ({ selectedCardData }) => {
   for (let i = 0; i < domains.length; i++) {
     domainOptions.push({ value: domains[i] });
   }
+  
 
   const { SHOW_PARENT } = TreeSelect;
   const treeData = [
@@ -111,7 +118,6 @@ export const AddOrganisations = ({ selectedCardData }) => {
     },
   ];
 
-  const { Text } = Typography;
   const { Option } = Select;
 
   const prefixSelector = (
@@ -120,7 +126,7 @@ export const AddOrganisations = ({ selectedCardData }) => {
         style={{
           width: 70,
         }}
-        // defaultValue="India"
+        defaultValue="India"
       >
         <Option value="India">
           <img
@@ -207,7 +213,7 @@ export const AddOrganisations = ({ selectedCardData }) => {
 
   const saveDataToLocalStorage = (organization) => {
 
-    if (location.href === "http://localhost:3000/AddOrganisationsView") {
+    if (location.href === "http://localhost:3000/Organisations/AddOrganisationsView") {
       organization["id"] = id;
 
       let organizationData;
@@ -239,14 +245,26 @@ export const AddOrganisations = ({ selectedCardData }) => {
       organizationData.push(dataObject);
 
       localStorage.setItem("organization", JSON.stringify(organizationData));
+      window.location.href = "/Organisations";
     }
     else {
       let previousData = localStorage.getItem("organization");
       let parsedData = JSON.parse(previousData);
       console.log(parsedData)
 
-      let index = parsedData.findIndex(selectedCardData)
+      let index = parsedData.findIndex(each => each.id === selectedCardData.id)
       console.log('index', index)
+
+      let id = organization["id"]
+
+      id = selectedCardData.id;
+
+      parsedData[index] = organization
+      parsedData[index].id = id
+
+      localStorage.setItem("organization", JSON.stringify(parsedData))
+
+      window.location.href = "/Organisations";
     }
   };
 
@@ -272,9 +290,36 @@ export const AddOrganisations = ({ selectedCardData }) => {
     },
   };
 
+  const [isResetPassword, setIsResetPassword] = useState(false);
+
+  const showModal = () => {
+    setIsResetPassword(true);
+  };
+
+  const countDown = () => {
+    const modal = Modal.success({
+      title: 'Password Changed',
+      content: `New Password has been sent to ${selectedCardData.email}`,
+    });
+
+    setTimeout(() => {
+      setIsResetPassword(false)
+    }, 100);
+  
+    setTimeout(() => {
+      modal.destroy();
+    }, 1000);
+  };
+
+  const [disablebutton,isDisablebutton] = useState(false)
+
+  const previousPage = () => {
+    history.goBack()
+  }
+
+
   return (
-    <div className="Add-organisations-container">
-      <Text>Add Organization</Text>
+    
       <div className="add-organisation-container">
         <Form
           autoComplete="on"
@@ -284,7 +329,6 @@ export const AddOrganisations = ({ selectedCardData }) => {
           // getValueFromEvent={normFile}
           onFinish={(values) => {
             saveDataToLocalStorage(values);
-            window.location.href = "/";
           }}
           onFinishFailed={(error) => {
             console.log({ error });
@@ -306,11 +350,14 @@ export const AddOrganisations = ({ selectedCardData }) => {
                 onChange={handleChange}
               >
                 {imageUrl ? (
-                  <img src={imageUrl} alt="avatar" className="form-image" />
+                  <img src={imageUrl}
+                   alt="avatar" 
+                   className="form-image" 
+                   />
                 ) : (
                   <img
                     src={defaultValue.logo}
-                    alt="logo"
+                    alt="+"
                     className="form-image"
                   />
                 )}
@@ -325,6 +372,69 @@ export const AddOrganisations = ({ selectedCardData }) => {
                 )} */}
               </Upload>
             </Form.Item>
+            {location.href === 'http://localhost:3000/Organisations/AddOrganisationsView' ?
+              null : 
+              <Form.Item style={{ width: "100%" }}>
+              <Button className="reset-button" onClick={showModal}>
+                Reset Password
+              </Button>
+              <Modal
+                open={isResetPassword}
+                // onCancel={countDown}
+                closable={false}
+                footer={null}
+              >
+                <div className="reset-password-container">
+                  <Text className="reset-password-title"> Reset Password</Text>
+                  <Form>
+                    <Form.Item
+                      name="password"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please enter new password!",
+                        },
+                      ]}
+                      style={{ width: "100%" }}
+                    >
+                      <Input.Password className="reset-password-input" placeholder="New Password" />
+                    </Form.Item>
+                    <Form.Item
+                      name="confirm"
+                      dependencies={["password"]}
+                      hasFeedback
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please confirm your password!",
+                        },
+                        ({ getFieldValue }) => ({
+                          validator(_, value) {
+                            if (!value || getFieldValue("password") === value) {
+                              isDisablebutton(true)
+                              return Promise.resolve();
+                            }
+                            return Promise.reject(
+                              new Error(
+                                "The two passwords that you entered do not match!"
+                              )
+                            );
+                          },
+                        }),
+                      ]}
+                    >
+                      <Input.Password className="reset-password-input" placeholder="Confirm Password" />
+                    </Form.Item>
+                    <Form.Item>
+                      <div className="reset-button-container">
+                      <Button type="primary" disabled={!disablebutton} onClick={countDown}>Reset</Button>
+                      </div>
+                    </Form.Item>
+                  </Form>
+                </div>
+              </Modal>
+            </Form.Item>
+          }
           </div>
           <div className="add-organisation-form-fillup-container">
             <Form.Item
@@ -461,11 +571,11 @@ export const AddOrganisations = ({ selectedCardData }) => {
                 wrapperCol={{ ...layout.wrapperCol, offset: 8 }}
                 style={{ marginRight: "5%" }}
               >
-                <Link to="/">
-                  <Button htmlType="Cancel" className="cancel-button">
+                {/* <Link to="/Organisations"> */}
+                  <Button htmlType="Cancel" className="cancel-button" onClick={previousPage}>
                     Cancel
                   </Button>
-                </Link>
+                {/* </Link> */}
               </Form.Item>
               <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
                 <Button type="primary" htmlType="Save">
@@ -476,7 +586,6 @@ export const AddOrganisations = ({ selectedCardData }) => {
           </div>
         </Form>
       </div>
-    </div>
   );
 };
 

@@ -4,8 +4,11 @@ import React, { useEffect, useState } from 'react'
 import { OrgPagination } from '../OrganisationPagination/Pagination'
 import { useHistory } from 'react-router-dom'
 import './OrganisationListView.scss'
+import PropTypes from 'prop-types';
 
-export const OrganisationsListView = () => {
+
+export const OrganisationsListView = ({selectedCard}) => {
+
 
   const columns = [
     {
@@ -59,6 +62,11 @@ export const OrganisationsListView = () => {
     let updatedData = localStorage.getItem("organization");
     let parsedUpdateData = JSON.parse(updatedData);
 
+    const RowSelected = (item) => {
+      selectedCard(item)
+      history.push('/EditOrganisation')
+    }
+
   return (
     <div className="organisation-list-content-container">
         <Table  size="large"
@@ -66,12 +74,16 @@ export const OrganisationsListView = () => {
         columns={columns}
         dataSource={filterData}
         pagination={false}
-        onRow={() => ({
+        onRow={(item) => ({
           onClick: () => 
-              history.push('/EditOrganisationView')
+              {RowSelected(item)}
       })}
         />
         <OrgPagination setpage={setpage} pageSize = {pageSize}/>          
     </div>
   )
+}
+
+OrganisationsListView.propTypes = {
+  selectedCard: PropTypes.func,
 }

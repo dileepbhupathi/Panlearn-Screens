@@ -8,9 +8,12 @@ import {
   DownOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
 
 export const OrganisationsListHeader = () => {
+
+  const {url} = useRouteMatch()
+  
   const { Text } = Typography;
 
   const handleMenuClick = (e) => {
@@ -49,7 +52,7 @@ export const OrganisationsListHeader = () => {
           prefix={<SearchOutlined />}
         />
         <Menu mode="horizontal" className="organisation-header-icons-container">
-        <Link to='/'>
+        <Link to='/Organisations'>
           <Menu.Item key="gridContent">
           <AppstoreFilled className="organisation-list-icon" />
           </Menu.Item>
@@ -68,7 +71,7 @@ export const OrganisationsListHeader = () => {
             </Button>
           </Dropdown>
         </div>
-        <Link to='/AddOrganisationsView'>
+        <Link to={`${url}/AddOrganisationsView`}>
         <Button type="primary">Add Organization</Button>
         </Link>
       </div>
