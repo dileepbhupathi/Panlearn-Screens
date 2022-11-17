@@ -37,7 +37,7 @@ export const OrganisationGridContent = ({selectedCard}) => {
                     {item.orgStatus===true ?<div className="success-status"></div>:<div className="failure-status"></div>}
                     
                 <Meta
-                    avatar={<Avatar size={65} src={item.logo} />}
+                    avatar={<Avatar size={65} src={item.logo} page = {page}/>}
                     title={item.orgName}
                     description={[
                         <div key={item.key}>
@@ -51,7 +51,7 @@ export const OrganisationGridContent = ({selectedCard}) => {
             </List.Item>
             )}
         />  
-        <OrgPagination setpage={setpage} pageSize = {pageSize}/>          
+        <OrgPagination setpage={setpage} pageSize = {pageSize} />          
     </div>
   );
 };

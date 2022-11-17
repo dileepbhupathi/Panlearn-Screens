@@ -5,17 +5,17 @@ import PropTypes from 'prop-types';
 
 
 
-export const OrgPagination = (props) => {
+export const OrgPagination = ({pageSize,setpage,page}) => {
 
   return (
     <div className='pagination'>
       <Pagination
         total={45}
+        // current = {page+1}
         showTotal={(total, range) => `Showing results ${range[1]} of ${total}`}
-        defaultPageSize={props.pageSize}
-        defaultCurrent={1}
-        onChange={(page) => props.setpage(page)}
-        
+        defaultPageSize={pageSize}
+        onChange={(page) => setpage(page)}
+        defaultCurrent={page}        
       />
     </div>
   );
@@ -24,6 +24,7 @@ export const OrgPagination = (props) => {
 
 OrgPagination.propTypes = {
   setpage: PropTypes.number,
-  pageSize: PropTypes.number
+  pageSize: PropTypes.number,
+  page : PropTypes.number
 }
 
