@@ -68,7 +68,7 @@ export const OrganisationsListHeader = () => {
             </Button>
           </Dropdown>
         </div>
-        <Link to='/AddOrganisationsView'>
+        <Link to='/Organisations/AddOrganisationsView'>
         <Button type="primary">Add Organization</Button>
         </Link>
       </div>

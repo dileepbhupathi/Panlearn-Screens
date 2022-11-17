@@ -37,7 +37,7 @@ export const AddOrganisations = ({ selectedCardData }) => {
   });
 
   useEffect(() => {
-    if (location.href === "http://localhost:3000/AddOrganisationsView") {
+    if (location.pathname === "/Organisations/AddOrganisationsView") {
       setDefaultValue({
         logo: "",
         orgName: "",
@@ -119,7 +119,7 @@ export const AddOrganisations = ({ selectedCardData }) => {
         style={{
           width: 70,
         }}
-        defaultValue="India"
+        // defaultValue="India"
       >
         <Option value="India">
           <img
@@ -205,7 +205,7 @@ export const AddOrganisations = ({ selectedCardData }) => {
   };
 
   const saveDataToLocalStorage = (organization) => {
-    if (location.href === "http://localhost:3000/AddOrganisationsView") {
+    if (location.pathname === "/Organisations/AddOrganisationsView") {
       organization["id"] = id;
 
       let organizationData;
@@ -266,14 +266,14 @@ export const AddOrganisations = ({ selectedCardData }) => {
     wrapperCol: { span: 16 },
   };
 
-  const [multiSelectValue, setMultiSelectValue] = useState([]);
+  const [multiselectvalue, setMultiselectvalue] = useState([]);
   const onChange = (newMultiSelectValue) => {
-    setMultiSelectValue(newMultiSelectValue);
+    setMultiselectvalue(newMultiSelectValue);
   };
 
   const tProps = {
     treeData,
-    multiSelectValue,
+    multiselectvalue,
     onChange,
     treeCheckable: true,
     showCheckedStrategy: SHOW_PARENT,
@@ -315,7 +315,7 @@ export const AddOrganisations = ({ selectedCardData }) => {
   return (
     <div className="Add-organisations-container">
       <Text>
-        {location.href === "http://localhost:3000/AddOrganisationsView"
+        {location.pathname === "/Organisations/AddOrganisationsView"
           ? "Add Organisation"
           : "Edit Organisation"}
       </Text>
@@ -364,8 +364,8 @@ export const AddOrganisations = ({ selectedCardData }) => {
                 )} */}
               </Upload>
             </Form.Item>
-            {location.href ===
-            "http://localhost:3000/AddOrganisationsView" ? null : (
+            {location.pathname ===
+            "/Organisations/AddOrganisationsView" ? null : (
               <Form.Item style={{ width: "100%" }}>
                 <Button className="reset-button" onClick={showModal}>
                   Reset Password
@@ -459,12 +459,13 @@ export const AddOrganisations = ({ selectedCardData }) => {
               ]}
               hasFeedback
               className="form-item"
+              initialValue={defaultValue.orgName}
             >
               <Input
                 placeholder="Type Organisation Name"
                 className="input"
                 allowClear={true}
-                defaultValue={defaultValue.orgName}
+                // defaultValue={defaultValue.orgName}
               />
             </Form.Item>
             <Form.Item
@@ -472,8 +473,12 @@ export const AddOrganisations = ({ selectedCardData }) => {
               label="Service :"
               name="service"
               rules={[{ required: true, message: "service is required" }]}
+              initialValue = {defaultValue.service}
             >
-              <TreeSelect {...tProps} defaultValue={defaultValue.service} />
+              <TreeSelect
+               {...tProps} 
+              //  defaultValue={defaultValue.service} 
+               />
             </Form.Item>
             <Form.Item
               label="Phone Number :"
@@ -485,6 +490,7 @@ export const AddOrganisations = ({ selectedCardData }) => {
                 },
               ]}
               className="form-item"
+              initialValue={defaultValue.phoneNumber}
             >
               <Input
                 addonBefore={prefixSelector}
@@ -494,7 +500,7 @@ export const AddOrganisations = ({ selectedCardData }) => {
                 // allowClear = {true}
                 minLength={9}
                 maxLength={10}
-                defaultValue={defaultValue.phoneNumber}
+                // defaultValue={defaultValue.phoneNumber}
               />
             </Form.Item>
             <Form.Item
@@ -511,12 +517,13 @@ export const AddOrganisations = ({ selectedCardData }) => {
                 },
               ]}
               className="form-item1"
+              initialValue={defaultValue.email}
             >
               <Input
                 placeholder="Please enter email"
                 className="input"
                 allowClear={true}
-                defaultValue={defaultValue.email}
+                // defaultValue={defaultValue.email}
               />
             </Form.Item>
             <Form.Item
@@ -524,12 +531,13 @@ export const AddOrganisations = ({ selectedCardData }) => {
               name="city"
               rules={[{ required: true, message: "Please enter city" }]}
               className="form-item"
+              initialValue={defaultValue.city}
             >
               <Input
                 placeholder="Please enter city"
                 className="input"
                 allowClear={true}
-                defaultValue={defaultValue.city}
+                // defaultValue={defaultValue.city}
               />
             </Form.Item>
             <Form.Item
@@ -537,16 +545,22 @@ export const AddOrganisations = ({ selectedCardData }) => {
               name="state"
               rules={[{ required: true, message: "Please enter state" }]}
               className="form-item1"
+              initialValue={defaultValue.state}
             >
               <Select
-                defaultValue={defaultValue.state}
+                // defaultValue={defaultValue.state}
                 className="input"
                 options={stateOptions}
               ></Select>
             </Form.Item>
-            <Form.Item label="Admin :" name="admin" className="form-item">
+            <Form.Item
+             label="Admin :"
+             name="admin" 
+             className="form-item"
+             initialValue={defaultValue.admin}
+             >
               <Select
-                defaultValue={defaultValue.admin}
+                // defaultValue={defaultValue.admin}
                 className="input"
                 options={adminOptions}
               ></Select>
@@ -556,9 +570,10 @@ export const AddOrganisations = ({ selectedCardData }) => {
               name="orgDomain"
               rules={[{ required: true, message: "Please enter state" }]}
               className="form-item1"
+              initialValue={defaultValue.orgDomain}
             >
               <Select
-                defaultValue={defaultValue.orgDomain}
+                // defaultValue={defaultValue.orgDomain}
                 className="input"
                 options={domainOptions}
               ></Select>
@@ -568,12 +583,13 @@ export const AddOrganisations = ({ selectedCardData }) => {
               name={["address"]}
               rules={[{ required: true, message: "address is required" }]}
               className="form-item1"
+              initialValue={defaultValue.address}
             >
               <Input
                 placeholder="Please enter address"
                 className="input"
                 allowClear={true}
-                defaultValue={defaultValue.address}
+                // defaultValue={defaultValue.address}
               />
             </Form.Item>
             <div className="add-organisation-form-buttons">

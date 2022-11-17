@@ -10,8 +10,10 @@ import {
 } from "@ant-design/icons";
 
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 
-export const OrganisationsGridHeader = () => {
+
+export const OrganisationsGridHeader = ({setIsGridOrganisation,isGridOrganisation}) => {
   const { Text } = Typography;
 
   const handleMenuClick = (e) => {
@@ -41,9 +43,6 @@ export const OrganisationsGridHeader = () => {
     />
   );
 
-
-
-
   return (
     <div className="Organisations-header-container">
       <Text> List Of Organizations</Text>
@@ -60,14 +59,15 @@ export const OrganisationsGridHeader = () => {
           </Link>
         </div> */}
         <Menu mode="horizontal" className="organisation-header-icons-container">
-          <Menu.Item key="gridContent">
-            <AppstoreFilled  className="organisation-app-filled-icon"/>
+          <Menu.Item key="gridContent" onClick={() => {setIsGridOrganisation(true)}}>
+            <AppstoreFilled
+            className={isGridOrganisation ? "organisation-app-filled-icon" : "organisation-list-icon"}
+              />
           </Menu.Item>
-          <Link to='/OrganisationList'>
-            <Menu.Item key="listContent">
-              <UnorderedListOutlined  className="organisation-list-icon" />
+            <Menu.Item key="listContent" onClick={()=>{setIsGridOrganisation(false)}}>
+              <UnorderedListOutlined 
+            />
             </Menu.Item>
-          </Link>
         </Menu>
         <div>
           <Dropdown overlay={menu}>
@@ -79,10 +79,16 @@ export const OrganisationsGridHeader = () => {
             </Button>
           </Dropdown>
         </div>
-        <Link to="/AddOrganisationsView">
+        <Link to="/Organisations/AddOrganisationsView">
           <Button type="primary">Add Organization</Button>
         </Link>
       </div>
     </div>
   );
 };
+
+
+OrganisationsGridHeader.propTypes = {
+  setIsGridOrganisation: PropTypes.bool,
+  isGridOrganisation : PropTypes.bool
+}

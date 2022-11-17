@@ -14,14 +14,12 @@ import {AddOrganisationsView} from './view/AddOrganisationsViewScreen/AddOrganis
 
 function App() {
 
-  // let {path} = useRouteMatch();
 
   const [selectedCardData, setSelectedCardData] = useState();
 
   const selectedCard = (item) => {
     setSelectedCardData(item);
   }
-
 
   return (
     <Layout>
@@ -38,10 +36,10 @@ function App() {
                 <Route exact path="/OrganisationList"  >
                   <OrganisationsListViewScreen selectedCard={selectedCard}/>
                 </Route>
-                <Route exact path='/AddOrganisationsView' >
+                <Route exact path="/Organisations/AddOrganisationsView" >
                   <AddOrganisationsView/>
                 </Route>
-                <Route exact path='/EditOrganisation'>
+                <Route  path="/Organisations/EditOrganisation">
                   <AddOrganisationsView  selectedCardData = {selectedCardData}/>
                 </Route>
               </Switch>
